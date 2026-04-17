@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard - IRCTC AutoBooker</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #ffffff;
+      color: #003366;
+    }
+
+    /* Top Banner */
+    header {
+      background-color: #003366;
+      color: #ffffff;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 { margin: 0; font-size: 1.5em; }
+    nav a {
+      color: #ffffff;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover { text-decoration: underline; }
+
+    /* Current Subscription Section */
+    .current-subscription {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-left: 5px solid #003366;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .current-subscription h2 {
+      margin-top: 0;
+      color: #003366;
+    }
+    .current-subscription p {
+      font-size: 1.1em;
+      margin: 8px 0;
+    }
+
+    /* Subscription History Section */
+    .history {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .history h2 {
+      margin-top: 0;
+      color: #003366;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    table th {
+      background-color: #003366;
+      color: #ffffff;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #f2f2f2;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+      color: #333333;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Banner -->
+  <header>
+    <h1>IRCTC AutoBooker</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="userhome.html">Dashboard</a>
+      <a href="instructions.html">Instructions</a>
+    </nav>
+  </header>
+  
+  <!-- Welcome Section -->
+<section class="welcome">
+  <h2 id="welcomeMessage"></h2>
+</section>
+
+
+  <!-- Current Subscription Section -->
+  <section class="current-subscription">
+    <h2>Current Subscription</h2>
+    <p><strong>Plan:</strong> AutoPay</p>
+    <p><strong>Purchase Date:</strong> 10 March 2026</p>
+    <p><strong>Validity:</strong> 30 days</p>
+    <p><strong>Expiry Date:</strong> 9 April 2026</p>
+  </section>
+
+  <!-- Subscription History Section -->
+  <section class="history">
+    <h2>Subscription History (Last 5 Purchases)</h2>
+    <table>
+      <tr>
+        <th>Plan</th>
+        <th>Purchase Date</th>
+        <th>Validity</th>
+        <th>Expiry Date</th>
+      </tr>
+      <tr>
+        <td>Premium Captcha</td>
+        <td>10 Feb 2026</td>
+        <td>30 days</td>
+        <td>9 Mar 2026</td>
+      </tr>
+      <tr>
+        <td>Freemium</td>
+        <td>10 Jan 2026</td>
+        <td>30 days</td>
+        <td>9 Feb 2026</td>
+      </tr>
+      <tr>
+        <td>AutoPay</td>
+        <td>10 Dec 2025</td>
+        <td>30 days</td>
+        <td>9 Jan 2026</td>
+      </tr>
+      <tr>
+        <td>Premium Captcha</td>
+        <td>10 Nov 2025</td>
+        <td>30 days</td>
+        <td>9 Dec 2025</td>
+      </tr>
+      <tr>
+        <td>Freemium</td>
+        <td>10 Oct 2025</td>
+        <td>30 days</td>
+        <td>9 Nov 2025</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    © 2026 IRCTC AutoBooker | About | Contact | Privacy Policy
+  </footer>
+  
+  <script>
+  // Retrieve user details from localStorage
+  const userName = localStorage.getItem("userName");
+  const userPhone = localStorage.getItem("userPhone");
+
+  if (userName && userPhone) {
+    document.getElementById("welcomeMessage").textContent =
+      `Welcome, ${userName} (Phone: ${userPhone})`;
+  } else {
+    document.getElementById("welcomeMessage").textContent =
+      "Welcome to your Dashboard";
+  }
+</script>
+</body>
+</html>

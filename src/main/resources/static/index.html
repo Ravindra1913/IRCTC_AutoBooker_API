@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IRCTC AutoBooker</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #ffffff;
+      color: #003366;
+    }
+
+    /* Top Banner */
+    header {
+      background-color: #003366;
+      color: #ffffff;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+    nav a {
+      color: #ffffff;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Card Section */
+    .card-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 40px auto;
+      max-width: 1000px;
+    }
+    .card {
+      background-color: #ffffff;
+      border: 2px solid #003366;
+      border-radius: 8px;
+      width: 250px;
+      margin: 15px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .card:hover, .card.selected {
+      background-color: #003366;
+      color: #ffffff;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #f2f2f2;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+      color: #333333;
+    }
+	
+	.plan-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 40px auto;
+  max-width: 1000px;
+}
+
+.plan-card {
+  background-color: #ffffff;
+  border: 2px solid #003366;
+  border-radius: 8px;
+  width: 250px;
+  margin: 15px;
+  padding: 20px;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.plan-card h2 {
+  color: #003366;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.plan-card ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.plan-card:hover {
+  background-color: #003366;
+  color: #ffffff;
+}
+
+.plan-card:hover h2 {
+  color: #ffffff;
+}
+
+.hero-banner {
+  background-image: url('Indian_Railway_Hero.png'); /* Replace with the downloaded image path */
+  background-size: cover;
+  background-position: center;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-align: center;
+  position: relative;
+}
+
+.hero-banner::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4); /* overlay for readability */
+}
+
+.hero-text {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-text h2 {
+  font-size: 2.2em;
+  margin: 0;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+}
+
+.hero-text p {
+  font-size: 1.2em;
+  margin-top: 10px;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+}
+
+.site-summary {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-left: 5px solid #003366;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.site-summary h2 {
+  color: #003366;
+  margin-bottom: 15px;
+  font-size: 1.8em;
+}
+
+.site-summary p {
+  font-size: 1.1em;
+  margin-bottom: 20px;
+  color: #333333;
+}
+
+.site-summary ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.site-summary li {
+  margin-bottom: 10px;
+  font-size: 1.05em;
+  color: #003366;
+}
+
+.price {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #003366;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.buy-button {
+  background-color: #003366;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  display: block;
+  margin: 0 auto;
+  transition: background-color 0.3s ease;
+}
+
+.buy-button:hover {
+  background-color: #0055aa;
+}
+
+#getOtpBtn {
+  background-color: #003366;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#getOtpBtn:hover {
+  background-color: #0055aa;
+}
+
+#otpSection input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#otpSection button {
+  background-color: #003366;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#otpSection button:hover {
+  background-color: #0055aa;
+}
+
+/* Popup background overlay */
+.popup {
+  display: none; /* hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+/* Popup box */
+.popup-content {
+  background-color: #ffffff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 320px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+/* Form fields */
+.popup-content label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+  color: #003366;
+}
+
+.popup-content input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #003366;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.popup {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  animation: fadeIn 0.4s ease; /* apply animation */
+}
+
+.popup-content {
+  background-color: #ffffff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 320px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  position: relative;
+  animation: fadeIn 0.5s ease; /* fade-in for the box itself */
+}
+
+  </style>
+</head>
+<body>
+  <!-- Top Banner -->
+  <header>
+    <h1>IRCTC AutoBooker</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" id="loginBtn">Login</a>
+      <a href="userhome.html">Dashboard</a>
+      <a href="instructions.html">Instructions</a>
+    </nav>
+  </header>
+  
+  <!-- Hero Banner Section -->
+<section class="hero-banner">
+  <div class="hero-text">
+    <h2>Welcome to IRCTC AutoBooker</h2>
+    <p>Fast, reliable, and authentic railway booking experience.</p>
+  </div>
+</section>
+
+
+ <!-- Website Summary Section -->
+<section class="site-summary">
+  <h2>About IRCTC AutoBooker</h2>
+  <p>
+    IRCTC AutoBooker is a smart, user-friendly platform designed to simplify and accelerate your Indian railway ticket booking experience. Whether you're a casual traveler or a frequent commuter, our service offers tailored features to suit your needs.
+  </p>
+  <ul>
+    <li>🔍 Search trains and check PNR status with ease</li>
+    <li>⚡ Automate booking with captcha solving and saved passenger details</li>
+    <li>💳 Enable AutoPay for one-click ticket confirmation</li>
+    <li>📊 Track booking history and manage preferences</li>
+    <li>📱 Mobile-friendly design with authentic railway visuals</li>
+  </ul>
+</section>
+
+  
+<!-- Subscription Plans Section -->
+<section class="plan-container">
+  <div class="plan-card">
+    <h2>Freemium</h2>
+    <ul>
+      <li>Basic train search access</li>
+      <li>Manual booking only</li>
+      <li>Limited support features</li>
+      <li>Free to use</li>
+    </ul>
+    <div class="price">₹0/month</div>
+    <button class="buy-button">Buy</button>
+  </div>
+
+  <div class="plan-card">
+    <h2>Premium Captcha</h2>
+    <ul>
+      <li>Automatic captcha solving</li>
+      <li>Priority booking assistance</li>
+      <li>Save passenger details</li>
+      <li>Monthly subscription</li>
+    </ul>
+    <div class="price">₹199/month</div>
+    <button class="buy-button">Buy</button>
+  </div>
+
+  <div class="plan-card">
+    <h2>AutoPay</h2>
+    <ul>
+      <li>One-click booking with saved payment</li>
+      <li>Fastest ticket confirmation</li>
+      <li>Advanced booking history tracking</li>
+      <li>Premium support</li>
+    </ul>
+    <div class="price">₹299/month</div>
+    <button class="buy-button">Buy</button>
+  </div>
+</section>
+
+<!-- Login Popup -->
+<div id="loginPopup" class="popup">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+		<br>
+      <label for="phone">Mobile No:</label>
+      <input type="tel" id="phone" name="phone" required>
+
+      <button type="button" id="getOtpBtn">Get OTP</button>
+
+      <div id="otpSection" style="display:none; margin-top:15px;">
+        <label for="otp">Enter 4-digit OTP:</label>
+        <input type="text" id="otp" name="otp" maxlength="4" pattern="\d{4}" required>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+  <!-- Footer -->
+  <footer>
+    © 2026 IRCTC AutoBooker | About | Contact | Privacy Policy
+  </footer>
+
+  <script>
+    // Simple card selection logic
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+      });
+    });
+	
+	const loginBtn = document.getElementById('loginBtn');
+  const loginPopup = document.getElementById('loginPopup');
+  const closeBtn = document.querySelector('.close');
+  const getOtpBtn = document.getElementById('getOtpBtn');
+  const otpSection = document.getElementById('otpSection');
+  const loginForm = document.getElementById('loginForm');
+
+// Open popup
+loginBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  loginPopup.style.display = 'block';
+  loginPopup.style.animation = "fadeIn 0.4s ease"; // trigger animation
+});
+
+
+  // Close popup
+  closeBtn.addEventListener('click', () => {
+    loginPopup.style.display = 'none';
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === loginPopup) {
+      loginPopup.style.display = 'none';
+    }
+  });
+
+  // Show OTP section when Get OTP clicked
+  getOtpBtn.addEventListener('click', () => {
+    otpSection.style.display = 'block';
+  });
+
+// Handle form submission
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const otp = document.getElementById('otp').value;
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('phone').value;
+
+  if (/^\d{4}$/.test(otp)) {
+    // Save user details in localStorage
+    localStorage.setItem("userName", name);
+    localStorage.setItem("userPhone", phone);
+
+    // Redirect to dashboard
+    window.location.href = "userhome.html";
+  } else {
+    alert("Please enter a valid 4-digit OTP.");
+  }
+});
+
+
+  </script>
+  
+</body>
+</html>
