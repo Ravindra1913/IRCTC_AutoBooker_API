@@ -14,6 +14,11 @@ public class AutoBookerRestController {
     @Autowired
     PackInfoRepository packInfoRepository;
 
+    @GetMapping("/")
+    public String home() {
+        return "Hello World!";
+    }
+
     @GetMapping("/validate/{userId}")
     public String verifyUserValidity() {
 

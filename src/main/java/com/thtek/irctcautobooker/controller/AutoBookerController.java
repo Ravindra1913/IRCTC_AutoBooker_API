@@ -12,7 +12,7 @@ public class AutoBookerController {
     @Autowired
     PackInfoRepository packInfoRepository;
 
-    @GetMapping("/")
+  /*  @GetMapping("/")
     public String home() {
         return "Hello, Ravindra!";
     }
@@ -27,7 +27,7 @@ public class AutoBookerController {
     // 8. Provision to validate the mobile number and unique key and send successful/failure response
     // Table Schema details to be saved. unique id, phone number, timestamp of purchase, validity,
     // expiry timestamp, pack number, status, last validity verified timestamp
-
+*/
     @PostMapping("/savePack")
     public String savePackDetails(@RequestBody PackDetails packDetails) {
 
