@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const buytimestamp = Date.now();
     const expirytimestamp = buytimestamp + daysToAdd * 24 * 60 * 60 * 1000;
 
-    fetch("http://localhost:8080/newPack", {
+    fetch("https://irctc-autobooker-web.onrender.com/newPack", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
