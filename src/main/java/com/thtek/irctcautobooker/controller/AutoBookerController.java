@@ -1,6 +1,6 @@
 package com.thtek.irctcautobooker.controller;
 
-import com.thtek.irctcautobooker.entity.PackDetails;
+import com.thtek.irctcautobooker.model.PackDetails;
 import com.thtek.irctcautobooker.respository.PackInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,20 +28,20 @@ public class AutoBookerController {
     // Table Schema details to be saved. unique id, phone number, timestamp of purchase, validity,
     // expiry timestamp, pack number, status, last validity verified timestamp
 */
-    @PostMapping("/savePack")
+  /*  @PostMapping("/savePack")
     public String savePackDetails(@RequestBody PackDetails packDetails) {
 
         packInfoRepository.save(packDetails);
 
         return "Details Saved";
-    }
+    } */
 
-    @GetMapping("/{id}")
+  /*  @GetMapping("/{id}")
     public String getPackDetails(@PathVariable String id) {
         String result = packInfoRepository.getPackDetailsById(id);
 
         return result;
     }
-
+*/
 
 }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buy Pack</title>
+</head>
+<body>
+<form>
+
+
+<p>User ID : </p>
+<input type="tel" id="userId" placeholder="Mobile Number" minlength="10" maxlength="10"
+       pattern="[0-9]{10}" required/>
+
+    <p>Subscription Plan : </p>
+    <select id="subscription_plan" name="plans">
+            <option value="premium_captcha">Premium Captcha</option>
+            <option value="premium_payment">Premium Payment</option>
+    </select>
+<p> Validity : </p>
+    <select id="plan_validity" name="validity"?>
+            <option value="days3">3 days</option>
+            <option value="days7">7 days</option>
+    </select>
+<p> Cost : Rs </p>
+<input type="text" value="0" id="cost" name="cost" readonly/>
+
+    <button type="button" onclick="buyPack()">Buy Pack</button>
+</form>
+
+<script src="/buyPack.js"></script>
+
+</body>
+</html>
