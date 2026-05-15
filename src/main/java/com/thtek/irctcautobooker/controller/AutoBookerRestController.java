@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
@@ -32,16 +34,16 @@ public class AutoBookerRestController {
 
         try{
             logger.info("User ID is : " + userId);
-               Date expiryDate = packInfoRepository.getPackDetailsByphNo(userId);
+               Instant expiryDate = packInfoRepository.getPackDetailsByphNo(userId);
                logger.info("Expiry Date is " + expiryDate);
 
 
             return expiryDate!=null ? ResponseEntity.ok(Map.of(
                     "status", "success",
-                    "message", expiryDate.getTime()))
+                    "message", expiryDate.toString()))
                     : ResponseEntity.ok(Map.of(
                             "status", "fail",
-            "message", "User ID not found"));
+                            "message", "User ID not found"));
 
 
         }
@@ -60,19 +62,19 @@ public class AutoBookerRestController {
         try {
             logger.debug("Add New Pack Request");
 
-            long buytimestamp = System.currentTimeMillis();
+            Instant buytimestamp = Instant.now();
 
             int validity = newPackRequest.getValidity();
 
-            long expirytimestamp = buytimestamp + validity * 24L * 60 * 60 * 1000;
+            Instant expirytimestamp = buytimestamp.plus(Duration.ofDays(validity));
 
             logger.debug("Creating PackDetails Object");
             PackDetails newPackDetails = new PackDetails(
                     UUID.randomUUID().toString(),   // ✅ dynamic ID
                     newPackRequest.getUserId(),
-                    new Date(buytimestamp),
+                    buytimestamp,
                     newPackRequest.getValidity(),
-                    new Date(expirytimestamp),
+                    expirytimestamp,
                     10,
                     true
             );

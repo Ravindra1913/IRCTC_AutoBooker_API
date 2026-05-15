@@ -6,12 +6,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.Date;
 
 @Repository
 public interface PackInfoRepository extends JpaRepository<PackDetails, String> {
 
     public String getPackDetailsById(String id);
-    @Query("SELECT p.expiryTimeStamp FROM PackDetails p WHERE p.phNo = :phNo AND p.isActive = true ORDER BY p.dateTime DESC LIMIT 1")
-    public Date getPackDetailsByphNo(@Param("phNo") String phNo);
+    @Query("SELECT p.expiryTimeStamp FROM PackDetails p WHERE p.phNo = :phNo ORDER BY p.dateTime DESC LIMIT 1")
+    public Instant getPackDetailsByphNo(@Param("phNo") String phNo);
+
+
 }

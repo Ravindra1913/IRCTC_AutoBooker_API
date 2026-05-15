@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.time.Instant;
 import java.util.Date;
 
 @Entity
@@ -14,16 +15,16 @@ public class PackDetails {
     String id;
 
     String phNo;
-    Date dateTime;
+    Instant dateTime;
     int validity;
-    Date expiryTimeStamp;
+    Instant expiryTimeStamp;
     int packNumber;
     boolean isActive;
 
     public PackDetails() {
     }
 
-    public PackDetails(String id, String phNo, Date dateTime, int validity, Date expiryTimeStamp, int packNumber, boolean isActive) {
+    public PackDetails(String id, String phNo, Instant dateTime, int validity, Instant expiryTimeStamp, int packNumber, boolean isActive) {
         this.id = id;
         this.phNo = phNo;
         this.dateTime = dateTime;
