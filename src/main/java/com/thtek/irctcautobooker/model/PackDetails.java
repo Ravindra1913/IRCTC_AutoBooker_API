@@ -16,7 +16,7 @@ public class PackDetails {
 
     String phNo;
     Instant dateTime;
-    int validity;
+    Integer validity;
     Instant expiryTimeStamp;
     int packNumber;
     boolean isActive;
@@ -24,7 +24,7 @@ public class PackDetails {
     public PackDetails() {
     }
 
-    public PackDetails(String id, String phNo, Instant dateTime, int validity, Instant expiryTimeStamp, int packNumber, boolean isActive) {
+    public PackDetails(String id, String phNo, Instant dateTime, Integer validity, Instant expiryTimeStamp, int packNumber, boolean isActive) {
         this.id = id;
         this.phNo = phNo;
         this.dateTime = dateTime;
