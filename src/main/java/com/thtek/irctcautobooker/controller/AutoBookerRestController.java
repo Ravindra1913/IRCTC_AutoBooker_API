@@ -4,6 +4,7 @@ package com.thtek.irctcautobooker.controller;
 import com.thtek.irctcautobooker.entity.NewPackRequest;
 import com.thtek.irctcautobooker.model.PackDetails;
 import com.thtek.irctcautobooker.respository.PackInfoRepository;
+import com.thtek.irctcautobooker.respository.SubscriptionPlansInfoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class AutoBookerRestController {
 
     @Autowired
     PackInfoRepository packInfoRepository;
+
+    @Autowired
+    SubscriptionPlansInfoRepository subscriptionPlansInfoRepository;
 
     @GetMapping("/")
     public String home() {
@@ -48,6 +52,7 @@ public class AutoBookerRestController {
 
         }
         catch (Exception e){
+            logger.error("Error during 'Check Validity'", e);
             return ResponseEntity.status(500).body(Map.of(
                     "status", "error",
                     "message", e.getMessage()
@@ -65,6 +70,16 @@ public class AutoBookerRestController {
             Instant buytimestamp = Instant.now();
 
             int validity = newPackRequest.getValidity();
+            Integer subscriptionPlanId = subscriptionPlansInfoRepository.getSubscriptionPlanId(
+                    newPackRequest.getSubscriptionPlan(),
+                    validity);
+
+            if(subscriptionPlanId == null) {
+                return ResponseEntity.badRequest().body(Map.of(
+                        "status", "error",
+                        "message", "Invalid Subscription plan or validity")
+                );
+            }
 
             Instant expirytimestamp = buytimestamp.plus(Duration.ofDays(validity));
 
@@ -73,9 +88,9 @@ public class AutoBookerRestController {
                     UUID.randomUUID().toString(),   // ✅ dynamic ID
                     newPackRequest.getUserId(),
                     buytimestamp,
-                    newPackRequest.getValidity(),
+                    validity,
                     expirytimestamp,
-                    10,
+                    subscriptionPlanId,
                     true
             );
 
@@ -91,7 +106,7 @@ public class AutoBookerRestController {
             ));
 
         } catch (Exception e) {
-
+            logger.error("Error while adding a new Pack : ", e);
             return ResponseEntity.status(500).body(Map.of(
                     "status", "error",
                     "message", e.getMessage()
